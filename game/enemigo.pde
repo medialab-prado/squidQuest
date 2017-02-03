@@ -1,6 +1,9 @@
 
 
 class Enemigo {
+  
+  //Estas son las variables personales de nuestra clase Enemigo. ASi enemigo tendrá sus propios valores internos.
+  int id = -1;
   float posXenemigo;
   float posYenemigo;
   float tamanoenemigo;
@@ -9,39 +12,47 @@ class Enemigo {
   int timeColisionEnemigo;
   Boolean isColisionEnemigo = false;
 
-  void setup() {
+  //------------------------------------------------------------------------------
+  void setup(int miNuevaIdentificacion) {
+    id = miNuevaIdentificacion;
     bomba = loadImage ("bomba.png");
     posXenemigo = random (width);
     posYenemigo = random (height);
     tamanoenemigo = 50;
-    velocidadenemigo =random (-1, -3);
+    velocidadenemigo =random (-1, -6);
   }
-  void draw() {
+
+  //------------------------------------------------------------------------------
+  //Aqui todos los calculos generales. Colisiones y otras cosas.
+  void update() {
     posXenemigo = posXenemigo+velocidadenemigo;
-    image (bomba, posXenemigo, posYenemigo, tamanoenemigo, tamanoenemigo);
+
     if (posXenemigo < -tamanoenemigo/2) {
       posXenemigo = width + tamanoenemigo/2;
     }
-    int tiempoColisionandoEnemigo = millis() - timeColisionEnemigo;
-    if (tiempoColisionandoEnemigo > 1000) {
+
+    //Calcula la colision
+    float distanciaEnemigo =  dist( posXenemigo, posYenemigo, posX, posY);
+    if (distanciaEnemigo < 50) {
+        isColisionEnemigo = true;
+        println("colisiona con Bomba Id = " + str(id));
+    } else {
       isColisionEnemigo = false;
     }
 
+  }
 
-    float distanciaEnemigo =  dist( posXenemigo, posYenemigo, posX, posY);
-    if (distanciaEnemigo < 50) {
-      if (!isColisionEnemigo) {
-        isColisionEnemigo = true;
+  //------------------------------------------------------------------------------
+  //Aqui solo las cosas a dibujar
+  void draw() {
+
+    if (isColisionEnemigo) {
         tint(87, 46, 255);
-
-        println("colisiona");
-      }
     } else {
-      fill(255);
-      //DETECTAR COLISION AQUÍ
-      // isColisionEnemigo = false;
-      if (mouseY>0) {
-      }
+      tint(255, 255, 255);
+      isColisionEnemigo = false;
     }
+    //Pinta el enemigo aqui
+    image (bomba, posXenemigo, posYenemigo, tamanoenemigo, tamanoenemigo);
   }
 }

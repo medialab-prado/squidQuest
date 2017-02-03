@@ -3,7 +3,7 @@ PImage calamarMuerto;
 float posX;
 float posY;
 float tamano;
-int timeColision;
+int timeColision = 0;
 Boolean isColision = false;
 
 //PVector pos1, pos2, pos3, pos4, pos5;
@@ -23,8 +23,8 @@ void setup() {
   for (int i = 0; i < 10; i++) {
     Enemigo e = new Enemigo();
     enemigos.add(e);
-    e.setup();
-    e.draw();
+    e.setup(i);
+    //e.draw();
   }
 
   for (int i = 0; i < 4; i = i+1) {
@@ -42,33 +42,22 @@ void setup() {
 
 void update() {
 
+  //Calculo por cada enemigo
+  for (int i = 0; i < 10; i++) {
+    Enemigo enemigo = enemigos.get(i);
+    enemigo.update();
+    
+    if (enemigo.isColisionEnemigo == true) {
+      isColision = true;
+      timeColision = millis();
+      //println("Colisionando en millis ="+str(millis()));
+    }
+  }
+
+  //Calculo general
   int tiempoColisionando = millis() - timeColision;
   if (tiempoColisionando > 1000) {
     isColision = false;
-  }
-
-
-  for (int i = 0; i < 4; i = i+1) {
-    if (minas.get(i).x < 25 ) {
-      minas.get(i).x= width;
-      minas.get(i).y= random(height);
-    }
-
-
-    float distancia = 0;
-    distancia =  dist( minas.get(i).x, minas.get(i).y, posX, posY);
-    if (distancia < 50) {
-      fill(255, 0, 0);
-      if (!isColision) {
-        isColision = true;
-      }
-    } else {
-      fill(255);
-      //DETECTAR COLISION AQUI
-      if (mouseY>0) {
-      }
-    }
-    ellipse(minas.get(i).x, minas.get(i).y, 50, 50);
   }
 }
 
@@ -80,7 +69,6 @@ void draw () {
     Enemigo enemigo = enemigos.get(i);
     enemigo.draw();
   }
-
 
 
   if (isColision)tint(random (0, 255), random (0, 255), random (0, 255));
@@ -115,9 +103,5 @@ void draw () {
 
 
   update();
-  for (int i = 0; i < 4; i = i+1) {
-    minas.get(i).x=minas.get(i).x + velocidadMinas;
-  }
-  for (int i = 0; i < 4; i = i+1) {
-  }
+
 }
