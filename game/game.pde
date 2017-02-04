@@ -5,6 +5,11 @@ float posCalamarY;
 float tamano;
 int timeColision = 0;
 Boolean isColision = false;
+int posx = 100;
+int posy = 100;
+PImage estrella;
+int numeroVidas = 5;
+Boolean heMuerto = false;
 
 //PVector pos1, pos2, pos3, pos4, pos5;
 ArrayList<PVector> minas = new ArrayList<PVector>();
@@ -32,6 +37,7 @@ void setup() {
    minas.add( v );
    }*/
 
+  estrella = loadImage("estrella.png");
   calamar = loadImage ("calamar.png");
   calamarMuerto = loadImage ("calamar muerto.png");
   imageMode(CENTER);
@@ -70,15 +76,25 @@ void draw () {
     enemigo.draw();
   }
 
+  for (int i = 0; i < numeroVidas; i = i + 1) {
+    image(estrella, posx+i*150, posy);
+  }
 
-  if (isColision)
+  if (isColision) {
+    if (heMuerto == false) {
+      heMuerto = true;
+      numeroVidas = numeroVidas -1;
+    }
     tint(random (0, 255), random (0, 255), random (0, 255));
-  else 
-  tint(255, 255, 255);
-
+  } else {
+    heMuerto = false;
+    tint(255, 255, 255);  
+  }
+  
   image (calamar, posCalamarX, posCalamarY, tamano, tamano);
 
   tint(255, 255, 255);
+
 
   //esto es para mover el calamar según el ratón
 
