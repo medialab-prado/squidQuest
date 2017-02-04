@@ -27,13 +27,14 @@ class Enemigo {
   void update() {
     posXenemigo = posXenemigo+velocidadenemigo;
 
-    if (posXenemigo < -tamanoenemigo/2) {
+//aquí comprobamos si nos salimos izquierda
+    if (posXenemigo < 0 - tamanoenemigo/2) {
       posXenemigo = width + tamanoenemigo/2;
     }
 
     //Calcula la colision
-    float distanciaEnemigo =  dist( posXenemigo, posYenemigo, posX, posY);
-    if (distanciaEnemigo < 50) {
+    float distanciaEnemigo =  dist( posXenemigo, posYenemigo, posCalamarX, posCalamarY);
+    if (distanciaEnemigo < tamanoenemigo) {
         isColisionEnemigo = true;
         println("colisiona con Bomba Id = " + str(id));
     } else {

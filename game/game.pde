@@ -1,7 +1,7 @@
 PImage calamar;
 PImage calamarMuerto;
-float posX;
-float posY;
+float posCalamarX;
+float posCalamarY;
 float tamano;
 int timeColision = 0;
 Boolean isColision = false;
@@ -27,16 +27,16 @@ void setup() {
     //e.draw();
   }
 
-  for (int i = 0; i < 4; i = i+1) {
-    PVector v = new PVector(width-random(100, 500), posicionYInicial+espacioVertical*i+1);
-    minas.add( v );
-  }
+  /* for (int i = 0; i < 4; i = i+1) {
+   PVector v = new PVector(width-random(100, 500), posicionYInicial+espacioVertical*i+1);
+   minas.add( v );
+   }*/
 
   calamar = loadImage ("calamar.png");
   calamarMuerto = loadImage ("calamar muerto.png");
   imageMode(CENTER);
-  posX = 100;
-  posY = 200;
+  posCalamarX = 100;
+  posCalamarY = 200;
   tamano = 75;
 }
 
@@ -46,7 +46,7 @@ void update() {
   for (int i = 0; i < 10; i++) {
     Enemigo enemigo = enemigos.get(i);
     enemigo.update();
-    
+
     if (enemigo.isColisionEnemigo == true) {
       isColision = true;
       timeColision = millis();
@@ -71,37 +71,48 @@ void draw () {
   }
 
 
-  if (isColision)tint(random (0, 255), random (0, 255), random (0, 255));
-  else tint(255, 255, 255);
-  image (calamar, posX, posY, tamano, tamano);
+  if (isColision)
+    tint(random (0, 255), random (0, 255), random (0, 255));
+  else 
   tint(255, 255, 255);
-  if (posY > mouseY) {
-    posY = posY -3;
-  }
-  if (posY < mouseY) {
-    posY = posY +3;
-  }
-  if (posY < 31) {
-    posY =31;
-  }
-  if (posY > width) {
-    posY = width;
-  }
-  if (posY < 100) {
-    posY = posY -2;
-  }
-  if (posY > 300) {
-    posY = posY +2;
-  }
 
-  if (posX > mouseX) {
-    posX = posX -3;
-  }
-  if (posX < mouseX) {
-    posX = posX +3;
-  }
+  image (calamar, posCalamarX, posCalamarY, tamano, tamano);
 
+  tint(255, 255, 255);
+
+  //esto es para mover el calamar según el ratón
+
+  float tempDist = dist(mouseX, mouseY, posCalamarX, posCalamarY);
+
+  if (tempDist > 10) {
+
+    if (posCalamarY > mouseY) {
+      posCalamarY = posCalamarY -3;
+    }
+    if (posCalamarY < mouseY) {
+      posCalamarY = posCalamarY +3;
+    }
+    if (posCalamarY < 31) {
+      posCalamarY =31;
+    }
+    if (posCalamarY > width) {
+      posCalamarY = width;
+    }
+    if (posCalamarY < 100) {
+      posCalamarY = posCalamarY -2;
+    }
+    if (posCalamarY > 300) {
+      posCalamarY = posCalamarY +2;
+    }
+
+
+    if (posCalamarX > mouseX) {
+      posCalamarX = posCalamarX -3;
+    }
+    if (posCalamarX < mouseX) {
+      posCalamarX = posCalamarX +3;
+    }
+  }
 
   update();
-
 }
