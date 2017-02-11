@@ -10,9 +10,10 @@ int posy = 100;
 PImage estrella;
 int numeroVidas = 5;
 Boolean heMuerto = false;
-
+Boolean reset = false;
+PFont gameOverfont;
 //PVector pos1, pos2, pos3, pos4, pos5;
-ArrayList<PVector> minas = new ArrayList<PVector>();
+//ArrayList<PVector> minas = new ArrayList<PVector>();
 
 int espacioVertical=100;
 int posicionYInicial=10;
@@ -23,14 +24,20 @@ float x = random(1250, 1250);
 Enemigo enemigo = new Enemigo();
 ArrayList<Enemigo> enemigos = new ArrayList<Enemigo>();
 
-void setup() {
-  size(1000, 700);
-  for (int i = 0; i < 10; i++) {
+void enemigosInit(){
+    for (int i = 0; i < 10; i++) {
     Enemigo e = new Enemigo();
     enemigos.add(e);
     e.setup(i);
     //e.draw();
   }
+}
+
+void setup() {
+  size(1000, 700);
+  gameOverfont = createFont("GameOver.otf", 100);
+  textFont(gameOverfont);
+  enemigosInit();
 
   /* for (int i = 0; i < 4; i = i+1) {
    PVector v = new PVector(width-random(100, 500), posicionYInicial+espacioVertical*i+1);
@@ -49,7 +56,7 @@ void setup() {
 void update() {
 
   //Calculo por cada enemigo
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < enemigos.size(); i++) {
     Enemigo enemigo = enemigos.get(i);
     enemigo.update();
 
@@ -71,7 +78,13 @@ void update() {
 void draw () {
   background (0);
 
-  for (int i = 0; i < 10; i++) {
+  if (numeroVidas == 0) {
+    //pintar GAME OVER 
+    gameOver();
+  }
+
+
+  for (int i = 0; i < enemigos.size(); i++) {
     Enemigo enemigo = enemigos.get(i);
     enemigo.draw();
   }
@@ -88,9 +101,9 @@ void draw () {
     tint(random (0, 255), random (0, 255), random (0, 255));
   } else {
     heMuerto = false;
-    tint(255, 255, 255);  
+    tint(255, 255, 255);
   }
-  
+
   image (calamar, posCalamarX, posCalamarY, tamano, tamano);
 
   tint(255, 255, 255);
@@ -131,4 +144,22 @@ void draw () {
   }
 
   update();
+}
+void resetGame () {
+  enemigosInit();
+    numeroVidas = 5;
+}
+void keyPressed() {
+  
+  if (key == 'r' ) {
+    resetGame();
+  }
+}
+void gameOver() {
+  enemigos.clear();
+  textAlign(CENTER);
+  textSize(100);
+  text("Game Over", width/2, height/2);
+  textSize(50);
+  text("tap R to reset", width/2, height/2 + 200);
 }
