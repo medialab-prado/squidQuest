@@ -111,22 +111,28 @@ void draw () {
     if (posCalamarY < 31) {
       posCalamarY =31;
     }
-    if (posCalamarY > width) {
-      posCalamarY = width;
+    if (posCalamarY > height - tamano ) {
+      posCalamarY = height - tamano;
     }
+    /*
     if (posCalamarY < 100) {
       posCalamarY = posCalamarY -2;
     }
     if (posCalamarY > 300) {
       posCalamarY = posCalamarY +2;
     }
-
-
+*/
     if (posCalamarX > mouseX) {
       posCalamarX = posCalamarX -3;
     }
     if (posCalamarX < mouseX) {
       posCalamarX = posCalamarX +3;
+    }
+     if (posCalamarX > width - tamano ) {
+      posCalamarX = width - tamano;
+    }
+     if (posCalamarX < 0 + tamano ) {
+      posCalamarX = 0 + tamano;
     }
   }
 
