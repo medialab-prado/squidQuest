@@ -19,7 +19,8 @@ class Enemigo {
     posXenemigo = random (width);
     posYenemigo = random (height);
     tamanoenemigo = 50;
-    velocidadenemigo =random (-1, -6);
+    velocidadenemigo =random (-6, -1);
+    println ("enemigovelocidad"+str(velocidadenemigo));
   }
 
   //------------------------------------------------------------------------------
