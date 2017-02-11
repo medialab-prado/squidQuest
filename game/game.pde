@@ -79,19 +79,14 @@ void update() {
 void draw () {
   println(frameRate);
   background (0);
-<<<<<<< HEAD
 
   if (numeroVidas == 0) {
     //pintar GAME OVER 
     gameOver();
   }
 
-
-  for (int i = 0; i < enemigos.size(); i++) {
-=======
   fondo.anima();
-  for (int i = 0; i < 10; i++) {
->>>>>>> f047d512f3bf96a9d2a94e959d07e97e87620ea1
+  for (int i = 0; i <  enemigos.size(); i++) {
     Enemigo enemigo = enemigos.get(i);
     enemigo.draw();
   }
