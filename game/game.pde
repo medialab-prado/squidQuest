@@ -1,3 +1,4 @@
+Fondo fondo;
 PImage calamar;
 PImage calamarMuerto;
 float posCalamarX;
@@ -30,6 +31,7 @@ void enemigosInit(){
     enemigos.add(e);
     e.setup(i);
     //e.draw();
+    fondo = new Fondo(5);
   }
 }
 
@@ -54,7 +56,6 @@ void setup() {
 }
 
 void update() {
-
   //Calculo por cada enemigo
   for (int i = 0; i < enemigos.size(); i++) {
     Enemigo enemigo = enemigos.get(i);
@@ -76,7 +77,9 @@ void update() {
 
 
 void draw () {
+  println(frameRate);
   background (0);
+<<<<<<< HEAD
 
   if (numeroVidas == 0) {
     //pintar GAME OVER 
@@ -85,6 +88,10 @@ void draw () {
 
 
   for (int i = 0; i < enemigos.size(); i++) {
+=======
+  fondo.anima();
+  for (int i = 0; i < 10; i++) {
+>>>>>>> f047d512f3bf96a9d2a94e959d07e97e87620ea1
     Enemigo enemigo = enemigos.get(i);
     enemigo.draw();
   }
@@ -124,22 +131,28 @@ void draw () {
     if (posCalamarY < 31) {
       posCalamarY =31;
     }
-    if (posCalamarY > width) {
-      posCalamarY = width;
+    if (posCalamarY > height - tamano ) {
+      posCalamarY = height - tamano;
     }
+    /*
     if (posCalamarY < 100) {
-      posCalamarY = posCalamarY -2;
-    }
-    if (posCalamarY > 300) {
-      posCalamarY = posCalamarY +2;
-    }
-
-
+     posCalamarY = posCalamarY -2;
+     }
+     if (posCalamarY > 300) {
+     posCalamarY = posCalamarY +2;
+     }
+     */
     if (posCalamarX > mouseX) {
       posCalamarX = posCalamarX -3;
     }
     if (posCalamarX < mouseX) {
       posCalamarX = posCalamarX +3;
+    }
+    if (posCalamarX > width - tamano ) {
+      posCalamarX = width - tamano;
+    }
+    if (posCalamarX < 0 + tamano ) {
+      posCalamarX = 0 + tamano;
     }
   }
 

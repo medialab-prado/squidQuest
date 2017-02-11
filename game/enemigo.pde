@@ -1,5 +1,4 @@
 
-
 class Enemigo {
   
   //Estas son las variables personales de nuestra clase Enemigo. ASi enemigo tendrá sus propios valores internos.
@@ -19,7 +18,8 @@ class Enemigo {
     posXenemigo = random (width);
     posYenemigo = random (height);
     tamanoenemigo = 50;
-    velocidadenemigo =random (-1, -6);
+    velocidadenemigo =random (-6, -1);
+    println ("enemigovelocidad"+str(velocidadenemigo));
   }
 
   //------------------------------------------------------------------------------
@@ -30,6 +30,7 @@ class Enemigo {
 //aquí comprobamos si nos salimos izquierda
     if (posXenemigo < 0 - tamanoenemigo/2) {
       posXenemigo = width + tamanoenemigo/2;
+      posYenemigo = random(tamanoenemigo, height-tamanoenemigo);
     }
 
     //Calcula la colision
