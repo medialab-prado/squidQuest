@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class AnimatedSpritePngs extends PApplet {
+public class Animated_SpritePngs_Vs_Svg extends PApplet {
 
 /**
  * Animated Sprite (Shifty + Teddy)
@@ -167,7 +167,7 @@ class Animation {
 }
   public void settings() {  size(768, 628); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "AnimatedSpritePngs" };
+    String[] appletArgs = new String[] { "Animated_SpritePngs_Vs_Svg" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
