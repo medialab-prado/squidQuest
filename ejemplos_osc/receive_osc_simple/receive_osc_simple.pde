@@ -11,6 +11,7 @@ OscP5 oscP5;
 NetAddress myRemoteLocation;
 
 PShape myShape;
+float ballPosX = 0.5;
 float ballPosY = 0.5; // init pos
 
 void setup() {
@@ -33,7 +34,7 @@ void draw() {
   fill(0, 255, 0);
   
   shapeMode(CENTER);
-  shape(myShape, width/2, ballPosY*height, 100, 100);
+  shape(myShape, ballPosX*width, ballPosY*height, 100, 100);
   ellipse(width/2, ballPosY*height, 10, 10);
 }
 
@@ -44,12 +45,15 @@ void mousePressed() {
 /* incoming osc message are forwarded to the oscEvent method. */
 void oscEvent(OscMessage theOscMessage) {
   
-  println("Receiving something");
+  print("### received an osc message.");
+  print(" addrpattern: "+theOscMessage.addrPattern());
+  println(" typetag: "+theOscMessage.typetag());
   
   if (theOscMessage.checkAddrPattern("/test") == true) {
-    if (theOscMessage.checkTypetag("f")) {
-      ballPosY = theOscMessage.get(0).floatValue(); // sabemos que vale entre [0..1]
-      ballPosY = 1 - ballPosY; // invert the value
+    if (theOscMessage.checkTypetag("ff")) {
+      ballPosX = theOscMessage.get(0).floatValue();
+      ballPosY = theOscMessage.get(1).floatValue(); // sabemos que vale entre [0..1]
+      //ballPosY = 1 - ballPosY; // invert the value
     }
   }
 }

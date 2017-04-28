@@ -31,12 +31,12 @@ void enemigosInit(){
     enemigos.add(e);
     e.setup(i);
     //e.draw();
-    fondo = new Fondo(5);
+    fondo = new Fondo(1);
   }
 }
 
 void setup() {
-  size(1000, 700);
+  size(1000, 700, P2D);
   gameOverfont = createFont("GameOver.otf", 100);
   textFont(gameOverfont);
   enemigosInit();
@@ -100,7 +100,8 @@ void draw () {
       heMuerto = true;
       numeroVidas = numeroVidas -1;
     }
-    tint(random (0, 255), random (0, 255), random (0, 255));
+   // tint(random (0, 255), random (0, 255), random (0, 255));
+   tint(255, 0, 0);
   } else {
     heMuerto = false;
     tint(255, 255, 255);
