@@ -13,7 +13,7 @@ void setup(){
 }
 
 void draw(){
-  //background(0);
+  background(0);
 
   miBurbuja1.update();
   miBurbuja1.draw();
