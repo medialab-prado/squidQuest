@@ -1,3 +1,14 @@
+/////////////////////////////
+//OSC
+import oscP5.*;
+import netP5.*;
+
+OscP5 oscP5;
+NetAddress myRemoteLocation;
+float oscPosX = 0;
+float oscPosY = 0;
+
+/////////////////////////
 Fondo fondo;
 PImage calamar;
 PImage calamarMuerto;
@@ -53,6 +64,15 @@ void setup() {
   posCalamarX = 100;
   posCalamarY = 200;
   tamano = 75;
+  
+  ////////////////////////
+  setupOsc();
+}
+
+//-------------------------
+void setupOsc(){
+    //setup OSC
+  oscP5 = new OscP5(this, 12345);
 }
 
 void update() {
@@ -114,14 +134,14 @@ void draw () {
 
   //esto es para mover el calamar según el ratón
 
-  float tempDist = dist(mouseX, mouseY, posCalamarX, posCalamarY);
+  float tempDist = dist(oscPosX, oscPosY, posCalamarX, posCalamarY);
 
   if (tempDist > 10) {
 
-    if (posCalamarY > mouseY) {
+    if (posCalamarY > oscPosY) {
       posCalamarY = posCalamarY -3;
     }
-    if (posCalamarY < mouseY) {
+    if (posCalamarY < oscPosY) {
       posCalamarY = posCalamarY +3;
     }
     if (posCalamarY < 31) {
@@ -138,10 +158,10 @@ void draw () {
      posCalamarY = posCalamarY +2;
      }
      */
-    if (posCalamarX > mouseX) {
+    if (posCalamarX > oscPosX) {
       posCalamarX = posCalamarX -3;
     }
-    if (posCalamarX < mouseX) {
+    if (posCalamarX < oscPosX) {
       posCalamarX = posCalamarX +3;
     }
     if (posCalamarX > width - tamano ) {
@@ -171,4 +191,27 @@ void gameOver() {
   text("Game Over", width/2, height/2);
   textSize(50);
   text("tap R to reset", width/2, height/2 + 200);
+}
+
+//----------------------------------------------------
+void oscEvent(OscMessage theOscMessage) {
+
+  if (theOscMessage.checkAddrPattern("/GameBlob") == true) {
+    //if (theOscMessage.checkTypetag("ffff")) {
+      float OSCvalue0 = theOscMessage.get(0).floatValue(); // X position [0..1]
+      oscPosX = OSCvalue0*width;//escalamos
+      
+      float OSCvalue1 = theOscMessage.get(1).floatValue();  // Y position [0..1]
+      oscPosY = OSCvalue1*height;//escalamos
+      
+      println(" oscPosX: "+oscPosX);
+      println(" oscPosY: "+oscPosY);
+    }
+  //}
+}
+
+//-----------------------------------
+void mouseDragged(){
+  oscPosX = mouseX;
+  oscPosY = mouseY;
 }
